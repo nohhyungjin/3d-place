@@ -164,6 +164,47 @@ scene.add(ambientLight);
 camera.position.set(200, 200, 200);
 controls.update();
 
+let previewBlock = null;
+
+// 미리보기 블록 생성
+function createPreviewBlock() {
+    const geometry = new THREE.BoxGeometry(10, 10, 10);
+    const material = new THREE.MeshStandardMaterial({ 
+        color: 0x00ff00, 
+        transparent: true, 
+        opacity: 0.5 
+});
+    previewBlock = new THREE.Mesh(geometry, material);
+        scene.add(previewBlock);
+}
+
+createPreviewBlock();
+
+// 미리보기 블록 위치 업데이트
+function updatePreviewPosition(event) {
+    const mouse = new THREE.Vector2();
+    const raycaster = new THREE.Raycaster();
+
+mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+raycaster.setFromCamera(mouse, camera);
+
+const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+const intersection = new THREE.Vector3();
+
+if (raycaster.ray.intersectPlane(plane, intersection)) {
+    const gridSize = 10; 
+    const snappedX = Math.round(intersection.x / gridSize) * gridSize + gridSize / 2;
+    const snappedY = Math.round(intersection.y / gridSize) * gridSize + gridSize / 2;
+    const snappedZ = Math.round(intersection.z / gridSize) * gridSize + gridSize / 2;
+
+    previewBlock.position.set(snappedX, snappedY, snappedZ);
+}
+}
+
+// 마우스 이동 시 미리보기 블록 위치 업데이트
+renderer.domElement.addEventListener('mousemove', updatePreviewPosition);
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
