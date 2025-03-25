@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3D Place</title>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <div id="wrap-container">
-      <div id="3D-object"></div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft 3D Place</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div id="topPanel">
+        <button id="toggleMode">다크 모드</button>
+        <span id="clock">00:00:00</span>
     </div>
-    <div id="footer">
-      <div id="set-coordinate">
-        <input type="text" id="x" placeholder="x" />
-        <input type="text" id="y" placeholder="y" />
-        <input type="text" id="z" placeholder="z" />
-        <input type="color" id="color" placeholder="z" />
-        <button id="set-coordinate-btn">Set</button>
-      </div>
+    
+    <!-- 설정 버튼 및 로그인/회원가입 패널 -->
+    <div id="settingsPanel">
+        <button id="settingsButton">⚙️</button>
+        <div id="authPanel">
+            <button id="loginButton">로그인</button>
+            <button id="signupButton">회원가입</button>
+        </div>
     </div>
-    <script type="module" src="index.js"></script>
-  </body>
+    <script src="index.js"></script>
+</body>
 </html>
