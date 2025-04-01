@@ -1,0 +1,73 @@
+/* 기본 스타일 설정 */
+body {
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s;
+}
+/* 하단 컨트롤 패널 스타일 */
+#controlPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: #f0f0f0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+/* 상단 패널 스타일 */
+#topPanel {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#clock {
+  font-size: 16px;
+  font-weight: bold;
+}
+/* 설정 패널 및 버튼 스타일 */
+#settingsPanel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+#settingsButton {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+/* 로그인/회원가입 패널 애니메이션 효과 */
+#authPanel {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#authPanel.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* 입력 및 버튼 스타일 */
+input {
+  margin: 5px;
+  padding: 5px;
+  width: 60px;
+}
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+/* 캔버스 스타일 */
+canvas {
+  flex-grow: 1;
+  display: block;
+}
