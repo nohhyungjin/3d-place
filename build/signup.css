@@ -1,0 +1,75 @@
+/* 42 Dot Sans 글꼴 등록 */
+@font-face {
+  font-family: "42DotSans";
+  src: url("./fonts/42dotSans-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "42DotSans", "Arial", sans-serif; /* 42 Dot Sans를 기본 글꼴로 설정 */
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #333333;
+  margin-bottom: 1.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  font-family: "42DotSans", "Arial", sans-serif; /* 42 Dot Sans를 기본 글꼴로 설정 */
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+button {
+  font-family: "42DotSans", "Arial", sans-serif; /* 42 Dot Sans를 기본 글꼴로 설정 */
+  padding: 0.8rem;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+p#message {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #ff0000;
+}

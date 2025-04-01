@@ -84,7 +84,10 @@ document.getElementById("addBlock").addEventListener("click", () => {
   const x = parseFloat(document.getElementById("xCoord").value);
   const y = parseFloat(document.getElementById("yCoord").value);
   const z = parseFloat(document.getElementById("zCoord").value);
-  const color = parseInt(document.getElementById("selectedColor").value.slice(1), 16);
+  const color = parseInt(
+    document.getElementById("selectedColor").value.slice(1),
+    16
+  );
   createBlock(x, y, z, color, 10);
 });
 document.getElementById("loginButton").addEventListener("click", function () {
@@ -240,3 +243,8 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
+// 회원가입 버튼 클릭 시 signin.html로 이동
+document.getElementById("signupButton").addEventListener("click", function () {
+  window.location.href = "signup.html";
+});
