@@ -244,7 +244,12 @@ function animate() {
 }
 animate();
 
-// 회원가입 버튼 클릭 시 signin.html로 이동
+// 회원가입 버튼 클릭 시 signup.html로 이동
 document.getElementById("signupButton").addEventListener("click", function () {
   window.location.href = "signup.html";
 });
+
+// 로그인 버튼 클릭 시 signin.html로 이동
+document.getElementById("loginButton").addEventListener("click", function () {
+    window.location.href = "./login/login.html";
+  });
