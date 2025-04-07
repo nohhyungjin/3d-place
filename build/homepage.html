@@ -2,10 +2,9 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>미술관 홈페이지</title>
+    <title>Virtual Museum</title>
     <link rel="stylesheet" href="style.css" />
     <style>
-      /* 42 Dot Sans 글꼴 등록 */
       @font-face {
         font-family: "42DotSans";
         src: url("./fonts/42dotSans-VariableFont_wght.ttf") format("truetype");
@@ -13,54 +12,73 @@
         font-style: normal;
       }
 
-      body {
+      * {
         margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
         font-family: "42DotSans", sans-serif;
+        height: 100vh;
+        background: linear-gradient(135deg, #dfe9f3, #ecf0f3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       .homepage {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(135deg, #eceff1, #90a4ae);
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 60px 40px;
+        text-align: center;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        width: 90%;
+        max-width: 480px;
       }
+
       .homepage h1 {
-        font-size: 2.5rem;
-        color: #37474f;
+        font-size: 2.8rem;
         margin-bottom: 20px;
+        color: #2c3e50;
       }
+
       .homepage p {
         font-size: 1.2rem;
         color: #607d8b;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
+        line-height: 1.6;
       }
+
       .btn_enter {
-        background-color: #26c6da;
+        padding: 15px 35px;
+        font-size: 1.1rem;
         border: none;
-        padding: 15px 30px;
-        border-radius: 5px;
+        border-radius: 50px;
         color: white;
-        font-size: 1rem;
+        background: linear-gradient(135deg, #00bcd4, #0097a7);
+        box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
         cursor: pointer;
-        box-shadow: 1px 5px 15px -5px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
       }
+
       .btn_enter:hover {
-        background-color: #00acc1;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 188, 212, 0.6);
       }
     </style>
   </head>
   <body>
     <div class="homepage">
-      <h1>Welcome to Virtual Museum</h1>
-      <p>건축물을 감상하고, 블록을 만들며 나만의 미술관을 꾸며보세요.</p>
+      <h1>Virtual Museum</h1>
+      <p>건축물을 감상하고, 블록을 만들며<br />나만의 미술관을 꾸며보세요.</p>
       <button class="btn_enter" onclick="goToLogin()">입장하기</button>
     </div>
 
     <script>
       function goToLogin() {
-        window.location.href = "login.html";
+        window.location.href = "room-list.html";
       }
     </script>
   </body>
