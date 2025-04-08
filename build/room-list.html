@@ -168,23 +168,29 @@
       let roomCount = 2;
       let roomUsers = { 1: 0, 2: 0 };
 
-      document.getElementById("addRoomButton").addEventListener("click", function () {
-        roomCount++;
-        const roomList = document.getElementById("roomList");
-        const newRoom = document.createElement("div");
-        newRoom.classList.add("room");
-        newRoom.id = `room${roomCount}`;
-        newRoom.innerHTML = `<span>Room ${roomCount}</span>
+      document
+        .getElementById("addRoomButton")
+        .addEventListener("click", function () {
+          roomCount++;
+          const roomList = document.getElementById("roomList");
+          const newRoom = document.createElement("div");
+          newRoom.classList.add("room");
+          newRoom.id = `room${roomCount}`;
+          newRoom.innerHTML = `<span>Room ${roomCount}</span>
                              <div class="user-count" id="userCount${roomCount}">Users: 0</div>
                              <button onclick="joinRoom('Room ${roomCount}', ${roomCount})">입장</button>`;
-        roomList.appendChild(newRoom);
-        roomUsers[roomCount] = 0;
-      });
+          roomList.appendChild(newRoom);
+          roomUsers[roomCount] = 0;
+        });
 
       function joinRoom(roomName, roomId) {
         roomUsers[roomId]++;
-        document.getElementById(`userCount${roomId}`).innerText = `Users: ${roomUsers[roomId]}`;
-        alert(`Entering ${roomName}`);
+        document.getElementById(
+          `userCount${roomId}`
+        ).innerText = `Users: ${roomUsers[roomId]}`;
+
+        // roomId를 쿼리스트링에 포함해서 3dplace.html로 이동
+        window.location.href = `3dplace.html?room=${roomId}`;
       }
     </script>
   </body>
