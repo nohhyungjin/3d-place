@@ -251,5 +251,15 @@ document.getElementById("signupButton").addEventListener("click", function () {
 
 // 로그인 버튼 클릭 시 signin.html로 이동
 document.getElementById("loginButton").addEventListener("click", function () {
-    window.location.href = "./login/login.html";
-  });
+  window.location.href = "./login/login.html";
+});
+
+// URL에서 ?room=3 같은 값을 가져오기
+const urlParams = new URLSearchParams(window.location.search);
+const roomId = urlParams.get("room");
+
+// 페이지에 표시하거나 three.js 초기 세팅에 사용 가능
+document.getElementById("title").innerText = `Room ${roomId}에 입장하셨습니다`;
+
+// 예시: roomId 값에 따라 초기 블록 데이터 불러오거나, 다른 세팅 적용 가능
+console.log(`현재 입장한 방 번호: ${roomId}`);
