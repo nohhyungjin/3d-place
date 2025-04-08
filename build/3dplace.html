@@ -1,51 +1,37 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minecraft 3D Place</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
-        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        import { firebaseConfig } from "./firebase-config.js";
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
+      import { firebaseConfig } from "../firebase-config.js";
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div id="topPanel">
-        <button id="toggleMode">다크 모드</button>
-        <span id="clock">00:00:00</span>
+      <button id="toggleMode">다크 모드</button>
+      <span id="clock">00:00:00</span>
+    </div>
+
+    <div id="settingsPanel">
+      <button id="settingsButton">⚙️</button>
+      <div id="authPanel">
+        <button id="loginButton">로그인</button>
+        <button id="signupButton">회원가입</button>
       </div>
-    
-      <div id="settingsPanel">
-        <button id="settingsButton">⚙️</button>
-        <div id="authPanel">
-          <button id="loginButton">로그인</button>
-          <button id="signupButton">회원가입</button>
-        </div>
-      </div>
-    
-      <!-- 🎨 팔레트 -->
-      <div id="colorPalette">
-        <div id="paletteLabel">Color Palette</div>
-      </div>
-    
-      <!-- 숨겨진 컬러 피커 -->
-      <input type="color" id="colorInput" />
-    <script src="3dplace.js"></script>
-</body>
+    </div>
+
+    <!-- 🎨 팔레트 -->
+    <div id="colorPalette">
+      <div id="paletteLabel">Color Palette</div>
+    </div>
+
+    <!-- 숨겨진 컬러 피커 -->
+    <input type="color" id="colorInput" />
+    <script type="module" src="3dplace.js"></script>
+  </body>
 </html>
