@@ -1,7 +1,7 @@
 // 3dplace.js 상단에 추가
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
 import { getDatabase, ref, set, get, push } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-database.js";
-import { firebaseConfig } from "../firebase-config.js";
+import { firebaseConfig } from "./js/firebase-config.js";
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig);
