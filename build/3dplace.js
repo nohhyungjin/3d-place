@@ -253,8 +253,6 @@ if (roomId) {
   loadBlocks(roomId);
 }
 
-
-// 페이지에 표시하거나 three.js 초기 세팅에 사용 가능
 const titleElement = document.getElementById("title");
 if (titleElement) {
   titleElement.innerText = `Room ${roomId}에 입장하셨습니다`;
