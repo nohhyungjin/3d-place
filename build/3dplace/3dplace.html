@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft 3D Place</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr"></script>
+    
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="3dplace.css" />
+  </head>
+  <body>
+    <!-- 상단 패널: 시계 -->
+    <div id="topPanel">
+      <span id="clock">00:00:00</span>
+    </div>
+
+    <!-- 편집 도구 패널 -->
+    <div id="editTools">
+      <button class="tool-btn" id="toggleColorPicker">🎨 컬러피커</button>
+      <div id="colorPickerContainer"></div>
+      <button class="tool-btn" id="togglePalette">🎨 팔레트</button>
+      <div id="colorPalette"></div>
+      <button class="tool-btn" id="eraserBtn">🧽 지우개</button>
+      <button class="tool-btn" id="selectBtn">🪄 블록 선택</button>
+      <button class="tool-btn" id="applyColorBtn">🖌️ 색상 적용</button>
+      <button class="tool-btn" id="deleteSelectedBtn">🗑️ 선택 삭제</button>
+    </div>
+
+    <script type="module" src="3dplace.js"></script>
+  </body>
+</html>

@@ -8,8 +8,6 @@ import {
   createUserWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-auth.js";
 
-import { firebaseConfig } from "./firebase-config.js"; // 🔐 export 된 config 가져오기
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
