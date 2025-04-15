@@ -12,15 +12,23 @@
       href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr"></script>
-    
 
     <!-- External CSS -->
     <link rel="stylesheet" href="3dplace.css" />
   </head>
   <body>
     <!-- 상단 패널: 시계 -->
+    <!-- 상단 시계 패널 -->
     <div id="topPanel">
+      <button id="toggleMode">다크 모드</button>
       <span id="clock">00:00:00</span>
+    </div>
+    <div id="settingsPanel">
+      <button id="settingsButton">⚙️</button>
+      <div id="authPanel">
+        <button id="loginButton">로그인</button>
+        <button id="signupButton">회원가입</button>
+      </div>
     </div>
 
     <!-- 편집 도구 패널 -->
@@ -30,7 +38,7 @@
       <button class="tool-btn" id="togglePalette">🎨 팔레트</button>
       <div id="colorPalette"></div>
       <button class="tool-btn" id="eraserBtn">🧽 지우개</button>
-      <button class="tool-btn" id="selectBtn">🪄 블록 선택</button>
+      <button class="tool-btn" id="selectBtn">🖱️ 블록 선택</button>
       <button class="tool-btn" id="applyColorBtn">🖌️ 색상 적용</button>
       <button class="tool-btn" id="deleteSelectedBtn">🗑️ 선택 삭제</button>
     </div>

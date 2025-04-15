@@ -1,0 +1,63 @@
+@font-face {
+  font-family: "42DotSans";
+  src: url("../fonts/42dotSans-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "42DotSans", sans-serif;
+  height: 100vh;
+  background: linear-gradient(135deg, #dfe9f3, #ecf0f3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  width: 90%;
+  max-width: 480px;
+}
+
+.container h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.container p {
+  font-size: 1.2rem;
+  color: #607d8b;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+button {
+  font-family: "42DotSans", sans-serif;
+  padding: 15px 35px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  background: linear-gradient(135deg, #00bcd4, #0097a7);
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 188, 212, 0.6);
+}

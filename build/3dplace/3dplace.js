@@ -1,6 +1,14 @@
 // 3dplace.js 맨 위
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import {
+  getDatabase,
+  ref,
+  push,
+} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import {
+  get,
+  child,
+} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
 // Firebase 초기화
 const firebaseConfig = {
@@ -17,6 +25,39 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+const settingsButton = document.getElementById("settingsButton");
+const authPanel = document.getElementById("authPanel");
+
+settingsButton.addEventListener("click", () => {
+  authPanel.classList.toggle("show");
+});
+
+document.getElementById("loginButton").addEventListener("click", function () {
+  window.location.href = "../login/login.html";
+});
+document.getElementById("signupButton").addEventListener("click", function () {
+  window.location.href = "../signup/signup.html";
+});
+
+function loadBlocksFromFirebase(roomId) {
+  const dbRef = ref(database);
+  get(child(dbRef, `rooms/${roomId}/blocks`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const blocksData = snapshot.val();
+        Object.values(blocksData).forEach((block) => {
+          const { x, y, z, color, size } = block;
+          createBlockFromFirebase(x, y, z, color, size);
+        });
+        console.log("Blocks loaded from Firebase:", blocksData);
+      } else {
+        console.log("No blocks found for this room.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading blocks from Firebase:", error);
+    });
+}
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xe0e0e0);
@@ -148,7 +189,21 @@ function createBlock(x, y, z, color = 0x8b4513, size = 10) {
   saveBlockToFirebase(roomId, x, y, z, color, size);
 }
 
+function createBlockFromFirebase(x, y, z, color = "8b4513", size = 10) {
+  const formattedColor =
+    typeof color === "string" && !color.startsWith("#") ? `#${color}` : color;
 
+  const geometry = new THREE.BoxGeometry(size, size, size);
+  const material = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(formattedColor),
+  });
+
+  const block = new THREE.Mesh(geometry, material);
+  block.position.set(x, y, z);
+  block.userData.movable = true;
+  scene.add(block);
+  blocks.push(block);
+}
 
 function saveBlockToFirebase(roomId, x, y, z, color, size) {
   const blockData = {
@@ -169,10 +224,9 @@ function saveBlockToFirebase(roomId, x, y, z, color, size) {
     });
 }
 
-
 function getRoomIdFromUrl() {
   const params = new URLSearchParams(window.location.search);
-  const roomId = params.get("room");
+  const roomId = params.get("roomId");
   if (!roomId) {
     console.warn("No roomId found in URL. Using defaultRoomId.");
   }
@@ -289,6 +343,9 @@ scene.add(light);
 scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
 camera.position.set(100, 100, 100);
+const roomId = getRoomIdFromUrl();
+loadBlocksFromFirebase(roomId);
+
 controls.update();
 
 const gridHelper = new THREE.GridHelper(1000, 100);
