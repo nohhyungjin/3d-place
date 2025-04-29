@@ -5,6 +5,7 @@
   font-style: normal;
 }
 
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -16,38 +17,51 @@ body {
   height: 100vh;
   background: linear-gradient(135deg, #dfe9f3, #ecf0f3);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
+/* 타이틀 */
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 40px;
+}
+
+/* 회원가입 박스 */
 .container {
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(15px);
   border-radius: 20px;
-  padding: 60px 40px;
-  text-align: center;
+  padding: 40px 30px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
   width: 90%;
-  max-width: 480px;
+  max-width: 400px;
+  text-align: center;
 }
 
-.container h1 {
-  font-size: 2.8rem;
+/* 입력 폼 */
+input[type="email"],
+input[type="password"] {
+  font-family: "42DotSans", sans-serif;
+  width: 100%;
+  padding: 12px 20px;
   margin-bottom: 20px;
-  color: #2c3e50;
+  border: none;
+  border-radius: 50px;
+  background: #ecf0f3;
+  box-shadow: inset 2px 2px 5px #c8d0e7, inset -2px -2px 5px #ffffff;
+  font-size: 1rem;
 }
 
-.container p {
-  font-size: 1.2rem;
-  color: #607d8b;
-  margin-bottom: 40px;
-  line-height: 1.6;
-}
-
+/* 버튼 스타일 */
 button {
   font-family: "42DotSans", sans-serif;
-  padding: 15px 35px;
-  font-size: 1.1rem;
+  width: 100%;
+  padding: 12px 25px;
+  font-size: 1rem;
   border: none;
   border-radius: 50px;
   color: white;
@@ -55,9 +69,18 @@ button {
   box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-bottom: 15px;
 }
 
 button:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 188, 212, 0.6);
+}
+
+/* 메시지 출력 */
+#message {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: red;
+  font-weight: bold;
 }
