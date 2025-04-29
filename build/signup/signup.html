@@ -13,6 +13,7 @@
         <input type="email" id="email" placeholder="이메일 입력" required />
         <input type="password" id="password" placeholder="비밀번호 입력" required />
         <button id="signup-btn" type="submit">회원가입</button>
+        <button id="roomListButton">돌아가기</button>
       </form>
       <p id="message"></p>
     </div>
@@ -59,6 +60,10 @@
           .catch((error) => {
             message.innerText = "회원가입 실패: " + error.message;
           });
+      });
+      // "room-list.html"로 돌아가는 버튼 클릭 이벤트 추가
+      roomListButton.addEventListener("click", () => {
+        window.location.href = "../room-list/room-list.html"; // room-list 페이지로 이동
       });
     </script>
   </body>

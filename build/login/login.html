@@ -8,16 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script type="module">
-      // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
-      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
-
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
       const firebaseConfig = {
         apiKey: "AIzaSyAkMgmpn_uMOUSQoK-Wfg5hLHGAe-eNe_E",
         authDomain: "d-place-auth.firebaseapp.com",
@@ -28,33 +20,28 @@
         appId: "1:377526371183:web:077d196b9f8da6764cde9a",
         measurementId: "G-TTPH9YZCYL"
       };
-
-      // Initialize Firebase
       const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
       const auth = getAuth(app);
 
-      // Get references to the elements
       const emailInput = document.getElementById("email");
       const passwordInput = document.getElementById("password");
       const loginButton = document.getElementById("loginButton");
       const signupButton = document.getElementById("signupButton");
       const logoutButton = document.getElementById("logoutButton");
+      const googleLoginButton = document.getElementById("googleLoginButton");
       const messageDiv = document.getElementById("message");
       const userInfoDiv = document.getElementById("userInfo");
+      const roomListButton = document.getElementById("roomListButton");
 
-      // Function to update the UI based on authentication state
       function updateUI(user) {
         if (user) {
-          // User is signed in
           emailInput.style.display = "none";
           passwordInput.style.display = "none";
           loginButton.style.display = "none";
           signupButton.style.display = "none";
           logoutButton.style.display = "block";
-          userInfoDiv.textContent = `Logged in as ${user.email}`;
+          userInfoDiv.textContent = `Logged in as ${user.displayName || user.email}`;
         } else {
-          // User is signed out
           emailInput.style.display = "block";
           passwordInput.style.display = "block";
           loginButton.style.display = "block";
@@ -64,30 +51,22 @@
         }
       }
 
-      // Listen for authentication state changes
       onAuthStateChanged(auth, (user) => {
         updateUI(user);
       });
 
-      // Handle login
       loginButton.addEventListener("click", () => {
         const email = emailInput.value;
         const password = passwordInput.value;
-
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
             messageDiv.textContent = "로그인 성공!";
           })
           .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            messageDiv.textContent = `로그인 실패: ${errorMessage}`;
+            messageDiv.textContent = `로그인 실패: ${error.message}`;
           });
       });
 
-      // Handle logout
       logoutButton.addEventListener("click", () => {
         signOut(auth)
           .then(() => {
@@ -98,26 +77,43 @@
           });
       });
 
-      // Handle signup button click
       signupButton.addEventListener("click", () => {
-        // Redirect to the signup page
-        window.location.href = "signup.html"; // Replace with your signup page URL
+        window.location.href = "../signup/signup.html"; // 회원가입 페이지로 이동
+      });
+
+      googleLoginButton.addEventListener("click", () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const user = result.user;
+            messageDiv.textContent = "구글 로그인 성공!";
+            updateUI(user);
+          })
+          .catch((error) => {
+            messageDiv.textContent = `구글 로그인 실패: ${error.message}`;
+          });
+      });
+
+      // "room-list.html"로 돌아가는 버튼 클릭 이벤트 추가
+      roomListButton.addEventListener("click", () => {
+        window.location.href = "../room-list/room-list.html"; // room-list 페이지로 이동
       });
     </script>
-    
   </head>
   <body>
     <div class="title">3d place</div>
     <div class="container">
+      
       <h2>로그인</h2>
       <input type="text" id="email" placeholder="이메일" />
       <input type="password" id="password" placeholder="비밀번호" />
       <button id="loginButton">로그인</button>
       <button id="signupButton">회원 가입</button>
-      <!-- 회원 가입 버튼 추가 -->
+      <button id="googleLoginButton">구글로 로그인</button>
       <button id="logoutButton" style="display: none">로그아웃</button>
       <div id="message"></div>
       <div id="userInfo"></div>
+      <button id="roomListButton">돌아가기</button> <!-- 우상단 버튼 -->  
     </div>
   </body>
 </html>
