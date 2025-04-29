@@ -291,6 +291,15 @@ renderer.domElement.addEventListener("click", (event) => {
   }
 });
 
+const toggleModeBtn = document.getElementById('toggleMode');
+        let darkMode = false;
+        toggleModeBtn.addEventListener('click', () => {
+            darkMode = !darkMode;
+            document.body.style.background = darkMode ? '#333' : '#fff';
+            toggleModeBtn.textContent = darkMode ? '화이트모드' : '다크모드';
+            scene.background = new THREE.Color(darkMode ? 0x222222 : 0xe0e0e0);
+        });
+
 document.getElementById("toggleColorPicker").addEventListener("click", () => {
   const container = document.getElementById("colorPickerContainer");
   container.style.display =
@@ -357,3 +366,26 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
+// === 🧲 편집 도구 패널 드래그 기능 ===
+const editTools = document.getElementById("editTools");
+let isDragging = false;
+let offsetX, offsetY;
+
+editTools.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  offsetX = e.clientX - editTools.offsetLeft;
+  offsetY = e.clientY - editTools.offsetTop;
+  e.preventDefault();
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (isDragging) {
+    editTools.style.left = (e.clientX - offsetX) + "px";
+    editTools.style.top = (e.clientY - offsetY) + "px";
+  }
+});
+
+document.addEventListener("mouseup", () => {
+  isDragging = false;
+});

@@ -1,4 +1,12 @@
+@font-face {
+  font-family: "42DotSans";
+  src: url("../fonts/42dotSans-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
+  font-family: "42DotSans", sans-serif;
   margin: 0;
   overflow: hidden;
   font-family: sans-serif;
@@ -7,6 +15,12 @@ body {
 canvas {
   display: block;
 }
+
+button {
+  font-family: "42DotSans", sans-serif;
+}
+
+span {font-family: "42DotSans", sans-serif;}
 
 /* 상단 시계 패널 */
 #topPanel {
@@ -41,6 +55,7 @@ canvas {
 }
 
 .tool-btn {
+  font-family: "42DotSans", sans-serif;
   background: #fff;
   border: 1px solid #333;
   padding: 5px;

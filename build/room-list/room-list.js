@@ -42,7 +42,7 @@ function loadRooms() {
         // 클릭 이벤트에서 roomId 사용
         roomItem.addEventListener("click", () => {
           const id = roomItem.dataset.roomId;
-          window.location.href = `/build/3dplace/3dplace.html?roomId=${id}`;
+          window.location.href = `../3dplace/3dplace.html?roomId=${id}`;
         });
 
         roomListContainer.appendChild(roomItem);

@@ -8,6 +8,14 @@
     ],
     "rewrites": [
       {
+        "source": "/room-list/**",
+        "destination": "/room-list/room-list.html"
+      },
+      {
+        "source": "/3dplace/**",
+        "destination": "/3dplace/3dplace.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
