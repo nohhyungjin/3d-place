@@ -4,11 +4,11 @@ import {
   getDatabase,
   ref,
   push,
-} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
-import {
   get,
   child,
+  set,
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
 
 // Firebase 초기화
 const firebaseConfig = {
@@ -182,12 +182,47 @@ function createBlock(x, y, z, color = 0x8b4513, size = 10) {
   const block = new THREE.Mesh(geometry, material);
   block.position.set(x, y, z);
   block.userData.movable = true;
+  block.userData.color = color; // 나중에 저장 시 필요
+  block.userData.size = size;
+
   scene.add(block);
   blocks.push(block);
-
-  const roomId = getRoomIdFromUrl();
-  saveBlockToFirebase(roomId, x, y, z, color, size);
 }
+
+function saveAllBlocksToFirebase() {
+  const roomId = getRoomIdFromUrl();
+  const blocksRef = ref(database, `rooms/${roomId}/blocks`);
+
+  // 기존 데이터 삭제 후 저장 (덮어쓰기)
+  set(blocksRef, {})  // 전체 블록을 초기화
+    .then(() => {
+      const updates = {};
+      blocks.forEach((block, index) => {
+        updates[`block${index}`] = {
+          x: block.position.x,
+          y: block.position.y,
+          z: block.position.z,
+          color: block.material.color.getHexString(),
+          size: block.userData.size || 10,
+        };
+      });
+
+      // 새 데이터 저장
+      set(blocksRef, updates)
+        .then(() => {
+          alert("블록이 저장되었습니다!");
+          console.log("모든 블록이 Firebase에 저장됨:", updates);
+        })
+        .catch((error) => {
+          console.error("블록 저장 중 오류:", error);
+        });
+    })
+    .catch((error) => {
+      console.error("기존 블록 삭제 중 오류:", error);
+    });
+}
+
+
 
 function createBlockFromFirebase(x, y, z, color = "8b4513", size = 10) {
   const formattedColor =
@@ -389,3 +424,6 @@ document.addEventListener("mousemove", (e) => {
 document.addEventListener("mouseup", () => {
   isDragging = false;
 });
+
+document.getElementById("saveButton").addEventListener("click", saveAllBlocksToFirebase);
+

@@ -39,6 +39,7 @@
           passwordInput.style.display = "none";
           loginButton.style.display = "none";
           signupButton.style.display = "none";
+          roomListButton.style.display = "block";
           logoutButton.style.display = "block";
           userInfoDiv.textContent = `Logged in as ${user.displayName || user.email}`;
         } else {
@@ -111,9 +112,10 @@
       <button id="signupButton">회원 가입</button>
       <button id="googleLoginButton">구글로 로그인</button>
       <button id="logoutButton" style="display: none">로그아웃</button>
+      <button id="roomListButton">돌아가기</button>
       <div id="message"></div>
       <div id="userInfo"></div>
-      <button id="roomListButton">돌아가기</button> <!-- 우상단 버튼 -->  
+       <!-- 우상단 버튼 -->  
     </div>
   </body>
 </html>
