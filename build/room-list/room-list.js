@@ -5,15 +5,13 @@ import {
   ref,
   onValue,
   push,
-  set
+  set,
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 import {
   getAuth,
   onAuthStateChanged,
-  signOut
+  signOut,
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-
-
 
 // Firebase 설정
 const firebaseConfig = {
@@ -24,43 +22,41 @@ const firebaseConfig = {
   storageBucket: "d-place-auth.firebasestorage.app",
   messagingSenderId: "377526371183",
   appId: "1:377526371183:web:077d196b9f8da6764cde9a",
-  measurementId: "G-TTPH9YZCYL"
+  measurementId: "G-TTPH9YZCYL",
 };
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig);
-
 const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const auth = getAuth(app);
 
-
-// HTML 요소 가져오기
+// HTML 요소
 const roomListContainer = document.getElementById("roomListContainer");
+const createRoomButton = document.getElementById("createRoomButton");
+const roomNameInput = document.getElementById("roomNameInput");
+const navbarMenu = document.querySelector(".navbar_menu");
 
-// 방 목록 불러오기 함수
+// 상태 플래그
+let showingMyRooms = false;
+
+// 전체 방 불러오기
 function loadRooms() {
-  const roomsRef = ref(database, 'rooms');
+  const roomsRef = ref(database, "rooms");
 
   onValue(roomsRef, (snapshot) => {
-    roomListContainer.innerHTML = ""; // 기존 목록 초기화
-
+    roomListContainer.innerHTML = "";
     const rooms = snapshot.val();
+
     if (rooms) {
       Object.entries(rooms).forEach(([roomId, roomData]) => {
         const roomItem = document.createElement("div");
         roomItem.className = "room-item";
         roomItem.textContent = roomData.name;
-
-        // roomId를 data 속성으로 저장
         roomItem.dataset.roomId = roomId;
-
-        // 클릭 이벤트에서 roomId 사용
         roomItem.addEventListener("click", () => {
-          const id = roomItem.dataset.roomId;
-          window.location.href = `../3dplace/3dplace.html?roomId=${id}`;
+          window.location.href = `../3dplace/3dplace.html?roomId=${roomId}`;
         });
-
         roomListContainer.appendChild(roomItem);
       });
     } else {
@@ -71,12 +67,43 @@ function loadRooms() {
   });
 }
 
-// 페이지 로드 시 실행
+// 내 방만 불러오기
+function loadMyRooms(uid) {
+  const roomsRef = ref(database, "rooms");
+
+  onValue(roomsRef, (snapshot) => {
+    roomListContainer.innerHTML = "";
+    const rooms = snapshot.val();
+    let found = false;
+
+    if (rooms) {
+      Object.entries(rooms).forEach(([roomId, roomData]) => {
+        if (roomData.createdBy === uid) {
+          const roomItem = document.createElement("div");
+          roomItem.className = "room-item";
+          roomItem.textContent = roomData.name;
+          roomItem.dataset.roomId = roomId;
+          roomItem.addEventListener("click", () => {
+            window.location.href = `../3dplace/3dplace.html?roomId=${roomId}`;
+          });
+          roomListContainer.appendChild(roomItem);
+          found = true;
+        }
+      });
+    }
+
+    if (!found) {
+      const msg = document.createElement("p");
+      msg.textContent = "내가 만든 전시관이 없습니다.";
+      roomListContainer.appendChild(msg);
+    }
+  });
+}
+
+// 초기 로딩: 전체 방 목록
 window.addEventListener("DOMContentLoaded", loadRooms);
 
-const createRoomButton = document.getElementById("createRoomButton");
-const roomNameInput = document.getElementById("roomNameInput");
-
+// 방 생성
 createRoomButton.addEventListener("click", () => {
   const roomName = roomNameInput.value.trim();
 
@@ -88,13 +115,13 @@ createRoomButton.addEventListener("click", () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const roomsRef = ref(database, "rooms");
-      const newRoomRef = push(roomsRef); // 고유 ID 자동 생성
+      const newRoomRef = push(roomsRef);
 
       const newRoom = {
         name: roomName,
         createdBy: user.uid,
         createdAt: new Date().toISOString(),
-        blocks: {} // 초기엔 빈 블록
+        blocks: {},
       };
 
       set(newRoomRef, newRoom)
@@ -112,38 +139,53 @@ createRoomButton.addEventListener("click", () => {
   });
 });
 
-// 네비게이션 메뉴 요소
-const navbarMenu = document.querySelector(".navbar_menu");
-
+// 로그인 상태 감지 및 네비게이션 메뉴 설정
 onAuthStateChanged(auth, (user) => {
   navbarMenu.innerHTML = ""; // 기존 메뉴 초기화
 
   if (user) {
-    // 로그인 상태일 때
+    // 로그아웃 메뉴
     const logoutItem = document.createElement("li");
     const logoutLink = document.createElement("a");
     logoutLink.href = "#";
     logoutLink.textContent = "로그아웃";
     logoutLink.addEventListener("click", (e) => {
       e.preventDefault();
-      signOut(auth).then(() => {
-        window.location.reload(); // 로그아웃 후 새로고침
-      });
+      signOut(auth).then(() => window.location.reload());
     });
     logoutItem.appendChild(logoutLink);
 
+    // 홈
     const homeItem = document.createElement("li");
     homeItem.innerHTML = `<a href="../index.html">홈</a>`;
 
-    const myRoomsItem = document.createElement("li");
-    myRoomsItem.innerHTML = `<a href="#">내 전시관</a>`; // 추후 구현 가능
+    // 내 전시관 토글
+    const roomToggleItem = document.createElement("li");
+    const roomToggleLink = document.createElement("a");
+    roomToggleLink.href = "#";
+    roomToggleLink.textContent = "내 전시관";
+    roomToggleItem.appendChild(roomToggleLink);
 
     navbarMenu.appendChild(logoutItem);
-    navbarMenu.appendChild(myRoomsItem);
     navbarMenu.appendChild(homeItem);
+    navbarMenu.appendChild(roomToggleItem);
 
+    showingMyRooms = false;
+
+    roomToggleLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (showingMyRooms) {
+        loadRooms();
+        roomToggleLink.textContent = "내 전시관";
+        showingMyRooms = false;
+      } else {
+        loadMyRooms(user.uid);
+        roomToggleLink.textContent = "전체 전시관";
+        showingMyRooms = true;
+      }
+    });
   } else {
-    // 비로그인 상태일 때
+    // 비로그인 상태 메뉴
     const loginItem = document.createElement("li");
     loginItem.innerHTML = `<a href="../login/login.html">로그인</a>`;
 
