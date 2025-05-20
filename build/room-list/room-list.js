@@ -48,22 +48,54 @@ function loadRooms() {
     roomListContainer.innerHTML = "";
     const rooms = snapshot.val();
 
-    if (rooms) {
-      Object.entries(rooms).forEach(([roomId, roomData]) => {
-        const roomItem = document.createElement("div");
-        roomItem.className = "room-item";
-        roomItem.textContent = roomData.name;
-        roomItem.dataset.roomId = roomId;
-        roomItem.addEventListener("click", () => {
-          window.location.href = `../3dplace/3dplace.html?roomId=${roomId}`;
+    onAuthStateChanged(auth, (user) => {
+      if (rooms) {
+        Object.entries(rooms).forEach(([roomId, roomData]) => {
+          const roomItem = document.createElement("div");
+          roomItem.className = "room-item";
+          roomItem.textContent = roomData.name;
+          roomItem.dataset.roomId = roomId;
+
+          // 클릭 시 3dplace.html로 이동
+          roomItem.addEventListener("click", () => {
+            window.location.href = `../3dplace/3dplace.html?roomId=${roomId}`;
+          });
+
+          // 🔒 로그인 상태이며 자신이 만든 방이면 삭제 버튼 추가
+          if (user && user.uid === roomData.createdBy) {
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "삭제";
+            deleteBtn.className = "delete-room-button";
+
+            deleteBtn.addEventListener("click", (e) => {
+              e.stopPropagation(); // 방 클릭 이벤트 방지
+              const confirmDelete = confirm(
+                `'${roomData.name}' 방을 삭제하시겠습니까?`
+              );
+              if (confirmDelete) {
+                const roomRef = ref(database, `rooms/${roomId}`);
+                set(roomRef, null)
+                  .then(() => {
+                    alert("방이 삭제되었습니다.");
+                    loadRooms(); // 목록 갱신
+                  })
+                  .catch((err) => {
+                    alert("삭제 중 오류 발생: " + err.message);
+                  });
+              }
+            });
+
+            roomItem.appendChild(deleteBtn);
+          }
+
+          roomListContainer.appendChild(roomItem);
         });
-        roomListContainer.appendChild(roomItem);
-      });
-    } else {
-      const msg = document.createElement("p");
-      msg.textContent = "방이 없습니다.";
-      roomListContainer.appendChild(msg);
-    }
+      } else {
+        const msg = document.createElement("p");
+        msg.textContent = "방이 없습니다.";
+        roomListContainer.appendChild(msg);
+      }
+    });
   });
 }
 
@@ -83,9 +115,36 @@ function loadMyRooms(uid) {
           roomItem.className = "room-item";
           roomItem.textContent = roomData.name;
           roomItem.dataset.roomId = roomId;
+
+          // 클릭 시 3dplace.html로 이동
           roomItem.addEventListener("click", () => {
             window.location.href = `../3dplace/3dplace.html?roomId=${roomId}`;
           });
+
+          // 🔥 삭제 버튼 추가
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "삭제";
+          deleteBtn.className = "delete-room-button";
+
+          deleteBtn.addEventListener("click", (e) => {
+            e.stopPropagation(); // 방 이동 방지
+            const confirmDelete = confirm(
+              `'${roomData.name}' 방을 삭제하시겠습니까?`
+            );
+            if (confirmDelete) {
+              const roomRef = ref(database, `rooms/${roomId}`);
+              set(roomRef, null)
+                .then(() => {
+                  alert("방이 삭제되었습니다.");
+                  loadMyRooms(uid); // 목록 갱신
+                })
+                .catch((err) => {
+                  alert("삭제 중 오류 발생: " + err.message);
+                });
+            }
+          });
+
+          roomItem.appendChild(deleteBtn);
           roomListContainer.appendChild(roomItem);
           found = true;
         }
@@ -143,8 +202,16 @@ createRoomButton.addEventListener("click", () => {
 onAuthStateChanged(auth, (user) => {
   navbarMenu.innerHTML = ""; // 기존 메뉴 초기화
 
+  // 공통 메뉴: 도움말 & 홈
+  const helpItem = document.createElement("li");
+  helpItem.innerHTML = `<a href="../help/help.html">도움말</a>`;
+
+  const homeItem = document.createElement("li");
+  homeItem.innerHTML = `<a href="../index.html">홈</a>`;
+
   if (user) {
-    // 로그아웃 메뉴
+    // 로그인 상태일 때 메뉴
+
     const logoutItem = document.createElement("li");
     const logoutLink = document.createElement("a");
     logoutLink.href = "#";
@@ -155,11 +222,6 @@ onAuthStateChanged(auth, (user) => {
     });
     logoutItem.appendChild(logoutLink);
 
-    // 홈
-    const homeItem = document.createElement("li");
-    homeItem.innerHTML = `<a href="../index.html">홈</a>`;
-
-    // 내 전시관 토글
     const roomToggleItem = document.createElement("li");
     const roomToggleLink = document.createElement("a");
     roomToggleLink.href = "#";
@@ -168,10 +230,10 @@ onAuthStateChanged(auth, (user) => {
 
     navbarMenu.appendChild(logoutItem);
     navbarMenu.appendChild(homeItem);
+    navbarMenu.appendChild(helpItem);
     navbarMenu.appendChild(roomToggleItem);
 
     showingMyRooms = false;
-
     roomToggleLink.addEventListener("click", (e) => {
       e.preventDefault();
       if (showingMyRooms) {
@@ -192,11 +254,9 @@ onAuthStateChanged(auth, (user) => {
     const signupItem = document.createElement("li");
     signupItem.innerHTML = `<a href="../signup/signup.html">회원가입</a>`;
 
-    const homeItem = document.createElement("li");
-    homeItem.innerHTML = `<a href="../index.html">홈</a>`;
-
     navbarMenu.appendChild(loginItem);
     navbarMenu.appendChild(signupItem);
     navbarMenu.appendChild(homeItem);
+    navbarMenu.appendChild(helpItem);
   }
 });
