@@ -146,3 +146,19 @@ body {
 .room-item:hover {
   transform: translateY(-5px);
 }
+
+.delete-room-button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background: #e57373;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.delete-room-button:hover {
+  background: #d32f2f;
+}
