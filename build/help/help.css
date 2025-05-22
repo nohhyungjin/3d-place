@@ -55,29 +55,35 @@ body {
   color: #0097a7;
 }
 
-/* 도움말 본문 */
+/* 도움말 본문 컨테이너 */
 .help-container {
   flex: 1;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 60px auto;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.6);
+  padding: 40px 60px;
+  background: rgba(255, 255, 255, 0.75);
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
   backdrop-filter: blur(10px);
 }
 
 .help-container h1 {
-  font-size: 2.2rem;
-  margin-bottom: 20px;
+  font-size: 2.4rem;
+  margin-bottom: 30px;
   color: #2c3e50;
   text-align: center;
 }
 
 .help-container h2 {
-  font-size: 1.5rem;
-  margin-top: 30px;
+  font-size: 1.6rem;
+  margin-top: 40px;
   color: #37474f;
+}
+
+.help-container h3 {
+  font-size: 1.3rem;
+  margin-top: 30px;
+  color: #455a64;
 }
 
 .help-container p {
@@ -85,6 +91,14 @@ body {
   line-height: 1.8;
   color: #546e7a;
   font-size: 1rem;
+}
+
+.help-container img {
+  margin-top: 15px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .help-container ul {
