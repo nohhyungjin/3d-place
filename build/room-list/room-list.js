@@ -36,6 +36,7 @@ const roomListContainer = document.getElementById("roomListContainer");
 const createRoomButton = document.getElementById("createRoomButton");
 const roomNameInput = document.getElementById("roomNameInput");
 const navbarMenu = document.querySelector(".navbar_menu");
+const userInfoDiv = document.getElementById("userInfo"); // ✅ 사용자 정보 영역
 
 // 상태 플래그
 let showingMyRooms = false;
@@ -61,23 +62,20 @@ function loadRooms() {
             window.location.href = `../3dplace/3dplace.html?roomId=${roomId}`;
           });
 
-          // 🔒 로그인 상태이며 자신이 만든 방이면 삭제 버튼 추가
           if (user && user.uid === roomData.createdBy) {
             const deleteBtn = document.createElement("button");
             deleteBtn.textContent = "삭제";
             deleteBtn.className = "delete-room-button";
 
             deleteBtn.addEventListener("click", (e) => {
-              e.stopPropagation(); // 방 클릭 이벤트 방지
-              const confirmDelete = confirm(
-                `'${roomData.name}' 방을 삭제하시겠습니까?`
-              );
+              e.stopPropagation();
+              const confirmDelete = confirm(`'${roomData.name}' 방을 삭제하시겠습니까?`);
               if (confirmDelete) {
                 const roomRef = ref(database, `rooms/${roomId}`);
                 set(roomRef, null)
                   .then(() => {
                     alert("방이 삭제되었습니다.");
-                    loadRooms(); // 목록 갱신
+                    loadRooms();
                   })
                   .catch((err) => {
                     alert("삭제 중 오류 발생: " + err.message);
@@ -116,27 +114,23 @@ function loadMyRooms(uid) {
           roomItem.textContent = roomData.name;
           roomItem.dataset.roomId = roomId;
 
-          // 클릭 시 3dplace.html로 이동
           roomItem.addEventListener("click", () => {
             window.location.href = `../3dplace/3dplace.html?roomId=${roomId}`;
           });
 
-          // 🔥 삭제 버튼 추가
           const deleteBtn = document.createElement("button");
           deleteBtn.textContent = "삭제";
           deleteBtn.className = "delete-room-button";
 
           deleteBtn.addEventListener("click", (e) => {
-            e.stopPropagation(); // 방 이동 방지
-            const confirmDelete = confirm(
-              `'${roomData.name}' 방을 삭제하시겠습니까?`
-            );
+            e.stopPropagation();
+            const confirmDelete = confirm(`'${roomData.name}' 방을 삭제하시겠습니까?`);
             if (confirmDelete) {
               const roomRef = ref(database, `rooms/${roomId}`);
               set(roomRef, null)
                 .then(() => {
                   alert("방이 삭제되었습니다.");
-                  loadMyRooms(uid); // 목록 갱신
+                  loadMyRooms(uid);
                 })
                 .catch((err) => {
                   alert("삭제 중 오류 발생: " + err.message);
@@ -159,7 +153,7 @@ function loadMyRooms(uid) {
   });
 }
 
-// 초기 로딩: 전체 방 목록
+// 초기 로딩
 window.addEventListener("DOMContentLoaded", loadRooms);
 
 // 방 생성
@@ -198,11 +192,10 @@ createRoomButton.addEventListener("click", () => {
   });
 });
 
-// 로그인 상태 감지 및 네비게이션 메뉴 설정
+// 로그인 상태 감지 및 메뉴 업데이트
 onAuthStateChanged(auth, (user) => {
-  navbarMenu.innerHTML = ""; // 기존 메뉴 초기화
+  navbarMenu.innerHTML = "";
 
-  // 공통 메뉴: 도움말 & 홈
   const helpItem = document.createElement("li");
   helpItem.innerHTML = `<a href="../help/help.html">도움말</a>`;
 
@@ -210,8 +203,6 @@ onAuthStateChanged(auth, (user) => {
   homeItem.innerHTML = `<a href="../index.html">홈</a>`;
 
   if (user) {
-    // 로그인 상태일 때 메뉴
-
     const logoutItem = document.createElement("li");
     const logoutLink = document.createElement("a");
     logoutLink.href = "#";
@@ -246,8 +237,12 @@ onAuthStateChanged(auth, (user) => {
         showingMyRooms = true;
       }
     });
+
+    // ✅ 사용자 이메일 일부 표시
+    const email = user.email;
+    const displayEmail = email.replace(/(.{3})(.*)(@.*)/, (_, a, b, c) => `${a}***${c}`);
+    userInfoDiv.textContent = `로그인: ${displayEmail}`;
   } else {
-    // 비로그인 상태 메뉴
     const loginItem = document.createElement("li");
     loginItem.innerHTML = `<a href="../login/login.html">로그인</a>`;
 
@@ -258,5 +253,7 @@ onAuthStateChanged(auth, (user) => {
     navbarMenu.appendChild(signupItem);
     navbarMenu.appendChild(homeItem);
     navbarMenu.appendChild(helpItem);
+
+    userInfoDiv.textContent = ""; // 로그인 정보 숨김
   }
 });

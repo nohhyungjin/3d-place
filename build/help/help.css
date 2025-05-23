@@ -14,7 +14,12 @@
 
 body {
   font-family: "42DotSans", sans-serif;
-  background: linear-gradient(135deg, #dfe9f3, #ecf0f3);
+  background: linear-gradient(
+      135deg,
+      rgba(223, 233, 243, 0.8),
+      rgba(236, 240, 243, 0.8)
+    ),
+    url("../img/2.webp") no-repeat center center / cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
