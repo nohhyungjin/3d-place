@@ -38,6 +38,9 @@ document.getElementById("loginButton").addEventListener("click", function () {
 document.getElementById("signupButton").addEventListener("click", function () {
   window.location.href = "../signup/signup.html";
 });
+document.getElementById("helpButton").addEventListener("click", function () {
+  window.location.href = "../help/help.html";
+});
 
 function loadBlocksFromFirebase(roomId) {
   const dbRef = ref(database);
