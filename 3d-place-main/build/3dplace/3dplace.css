@@ -149,10 +149,8 @@ span {font-family: "42DotSans", sans-serif;}
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   text-align: left;
-  overflow: visible;    
+  overflow: visible; 
 }
-
-
 
 /* 닫기 버튼 */
 .close-button {
