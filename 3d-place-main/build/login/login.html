@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft 3D Place</title>
+    <link rel="stylesheet" href="login.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+      import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyAkMgmpn_uMOUSQoK-Wfg5hLHGAe-eNe_E",
+        authDomain: "d-place-auth.firebaseapp.com",
+        databaseURL: "https://d-place-auth-default-rtdb.firebaseio.com",
+        projectId: "d-place-auth",
+        storageBucket: "d-place-auth.firebasestorage.app",
+        messagingSenderId: "377526371183",
+        appId: "1:377526371183:web:077d196b9f8da6764cde9a",
+        measurementId: "G-TTPH9YZCYL"
+      };
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const loginButton = document.getElementById("loginButton");
+      const signupButton = document.getElementById("signupButton");
+      const logoutButton = document.getElementById("logoutButton");
+      const googleLoginButton = document.getElementById("googleLoginButton");
+      const messageDiv = document.getElementById("message");
+      const userInfoDiv = document.getElementById("userInfo");
+      const roomListButton = document.getElementById("roomListButton");
+
+      function updateUI(user) {
+        if (user) {
+          emailInput.style.display = "none";
+          passwordInput.style.display = "none";
+          loginButton.style.display = "none";
+          signupButton.style.display = "none";
+          roomListButton.style.display = "block";
+          logoutButton.style.display = "block";
+          userInfoDiv.textContent = `Logged in as ${user.displayName || user.email}`;
+        } else {
+          emailInput.style.display = "block";
+          passwordInput.style.display = "block";
+          loginButton.style.display = "block";
+          signupButton.style.display = "block";
+          logoutButton.style.display = "none";
+          userInfoDiv.textContent = "";
+        }
+      }
+
+      onAuthStateChanged(auth, (user) => {
+        updateUI(user);
+      });
+
+      loginButton.addEventListener("click", () => {
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            messageDiv.textContent = "로그인 성공!";
+          })
+          .catch((error) => {
+            messageDiv.textContent = `로그인 실패: ${error.message}`;
+          });
+      });
+
+      logoutButton.addEventListener("click", () => {
+        signOut(auth)
+          .then(() => {
+            messageDiv.textContent = "로그아웃 성공!";
+          })
+          .catch((error) => {
+            messageDiv.textContent = `로그아웃 실패: ${error.message}`;
+          });
+      });
+
+      signupButton.addEventListener("click", () => {
+        window.location.href = "../signup/signup.html"; // 회원가입 페이지로 이동
+      });
+
+      googleLoginButton.addEventListener("click", () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const user = result.user;
+            messageDiv.textContent = "구글 로그인 성공!";
+            updateUI(user);
+          })
+          .catch((error) => {
+            messageDiv.textContent = `구글 로그인 실패: ${error.message}`;
+          });
+      });
+
+      // "room-list.html"로 돌아가는 버튼 클릭 이벤트 추가
+      roomListButton.addEventListener("click", () => {
+        window.location.href = "../room-list/room-list.html"; // room-list 페이지로 이동
+      });
+    </script>
+  </head>
+  <body>
+    <div class="title">3d place</div>
+    <div class="container">
+      
+      <h2>로그인</h2>
+      <input type="text" id="email" placeholder="이메일" />
+      <input type="password" id="password" placeholder="비밀번호" />
+      <button id="loginButton">로그인</button>
+      <button id="signupButton">회원 가입</button>
+      <button id="googleLoginButton">구글로 로그인</button>
+      <button id="logoutButton" style="display: none">로그아웃</button>
+      <button id="roomListButton">돌아가기</button>
+      <div id="message"></div>
+      <div id="userInfo"></div>
+       <!-- 우상단 버튼 -->  
+    </div>
+  </body>
+</html>

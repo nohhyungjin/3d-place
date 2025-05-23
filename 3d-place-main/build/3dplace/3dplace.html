@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft 3D Place</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr"></script>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="3dplace.css" />
+  </head>
+  <body>
+    <!-- 상단 패널: 시계 -->
+    <!-- 상단 시계 패널 -->
+    <div id="topPanel">
+      <button id="toggleMode">다크 모드</button>
+      <span id="clock">00:00:00</span>
+    </div>
+  <div id="settingsPanel">
+    <button id="settingsButton">⚙️</button>
+    <button id="loginButton">로그인</button>       
+    <button id="signupButton">회원가입</button>
+    <button id="backToListButton" onclick="location.href='../room-list/room-list.html'">← 전시관 목록으로</button>
+    <button id="tipButton">💡</button>
+  </div>
+  <div id="tipModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-button" id="closeTipModal">&times;</span>
+    <h2>웹사이트 이용 팁</h2>
+    <ul>
+      <li>🎨 컬러피커를 눌러 블록 색상을 선택하세요.</li>
+      <li>🧽 지우개 버튼으로 블록을 삭제할 수 있어요.</li>
+      <li>🖱️ 블록 선택 후 🖌️ 색상 적용 버튼으로 변경할 수 있어요.</li>
+      <li>🗑️ 선택 삭제 버튼으로 선택된 블록을 지울 수 있어요.</li>
+      <li>🌓 다크 모드 버튼으로 테마를 변경할 수 있어요.</li>
+    </ul>
+  </div>
+</div>
+    <!-- 편집 도구 패널 -->
+    <div id="editTools">
+      <button class="tool-btn" id="toggleColorPicker">🎨 컬러피커</button>
+      <div id="colorPickerContainer"></div>
+      <button class="tool-btn" id="togglePalette">🎨 팔레트</button>
+      <div id="colorPalette"></div>
+      <button class="tool-btn" id="eraserBtn">🧽 지우개</button>
+      <button class="tool-btn" id="selectBtn">🖱️ 블록 선택</button>
+      <button class="tool-btn" id="applyColorBtn">🖌️ 색상 적용</button>
+      <button class="tool-btn" id="deleteSelectedBtn">🗑️ 선택 삭제</button>
+      <button class="tool-btn" id="saveButton">저장</button>
+    </div>
+
+    <script type="module" src="3dplace.js"></script>
+  </body>
+</html>

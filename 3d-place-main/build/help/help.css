@@ -1,0 +1,117 @@
+@font-face {
+  font-family: "42DotSans";
+  src: url("../fonts/42dotSans-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "42DotSans", sans-serif;
+  background: linear-gradient(135deg, #dfe9f3, #ecf0f3);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 네비게이션 바 */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.navbar_logo a {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar_menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar_menu li a {
+  font-size: 1rem;
+  color: #607d8b;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar_menu li a:hover {
+  color: #0097a7;
+}
+
+/* 도움말 본문 컨테이너 */
+.help-container {
+  flex: 1;
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 40px 60px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.help-container h1 {
+  font-size: 2.4rem;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.help-container h2 {
+  font-size: 1.6rem;
+  margin-top: 40px;
+  color: #37474f;
+}
+
+.help-container h3 {
+  font-size: 1.3rem;
+  margin-top: 30px;
+  color: #455a64;
+}
+
+.help-container p {
+  margin-top: 10px;
+  line-height: 1.8;
+  color: #546e7a;
+  font-size: 1rem;
+}
+
+.help-container img {
+  margin-top: 15px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.help-container ul {
+  margin-top: 10px;
+  padding-left: 20px;
+  color: #546e7a;
+}
+
+.help-container li {
+  margin-bottom: 10px;
+}
+
+/* 하단 여백 확보 */
+footer {
+  height: 60px;
+}

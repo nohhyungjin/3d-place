@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Virtual Museum</title>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyAkMgmpn_uMOUSQoK-Wfg5hLHGAe-eNe_E",
+        authDomain: "d-place-auth.firebaseapp.com",
+        databaseURL: "https://d-place-auth-default-rtdb.firebaseio.com",
+        projectId: "d-place-auth",
+        storageBucket: "d-place-auth.firebasestorage.app",
+        messagingSenderId: "377526371183",
+        appId: "1:377526371183:web:077d196b9f8da6764cde9a",
+        measurementId: "G-TTPH9YZCYL"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      @font-face {
+        font-family: "42DotSans";
+        src: url("./fonts/42dotSans-VariableFont_wght.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "42DotSans", sans-serif;
+        height: 100vh;
+        background: linear-gradient(135deg, #dfe9f3, #ecf0f3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+/* 백그라운드 이미지 추가 */
+        background-image: url('background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .homepage {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 60px 40px;
+        text-align: center;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        width: 90%;
+        max-width: 480px;
+      }
+
+      .homepage h1 {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
+
+      .homepage p {
+        font-size: 1.2rem;
+        color: #607d8b;
+        margin-bottom: 40px;
+        line-height: 1.6;
+      }
+
+      .btn_enter {
+        font-family: "42DotSans", sans-serif;
+        padding: 15px 35px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 50px;
+        color: white;
+        background: linear-gradient(135deg, #00bcd4, #0097a7);
+        box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn_enter:hover {
+        font-family: "42DotSans", sans-serif;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 188, 212, 0.6);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="homepage">
+      <h1>Virtual Museum</h1>
+      <p>건축물을 감상하고, 블록을 만들며<br />나만의 미술관을 꾸며보세요.</p>
+      <button class="btn_enter" onclick="goToLogin()">입장하기</button>
+    </div>
+
+    <script>
+      function goToLogin() {
+        window.location.href = "room-list/room-list.html";
+      }
+    </script>
+  </body>
+</html>
